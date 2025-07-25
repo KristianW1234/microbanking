@@ -33,3 +33,41 @@ def get_customer_by_id(_, customer_id): #request parameter can be replaced with 
         "message": "Customer retrieved",
         "data": Customer_Serializer(customer).data
     }, status=200)
+
+@api_view(["PATCH"])
+def update_customer(request):
+    data = request.data
+    service = Customer_Service_Impl()
+    customer = service.update_customer(data)
+
+    if customer is None:
+        return Response({
+            "status": 404,
+            "message": "Customer not found",
+            "data": None
+        }, status=404)
+
+    return Response({
+        "status": 200,
+        "message": "Customer updated",
+        "data": Customer_Serializer(customer).data
+    }, status=200)
+
+@api_view(["DELETE"])
+def delete_customer(_, customer_id):
+
+    service = Customer_Service_Impl()
+    customer = service.delete_customer(customer_id)
+
+    if customer is None:
+        return Response({
+            "status": 404,
+            "message": "Customer not found",
+            "data": None
+        }, status=404)
+
+    return Response({
+        "status": 200,
+        "message": "Customer deleted",
+        "data": Customer_Serializer(customer).data
+    }, status=200)
