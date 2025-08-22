@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from api.controllers.customer_controller import add_customer, get_customer_by_id, update_customer, delete_customer
+from api.controllers.customer_controller import add_customer, get_customer_by_id, update_customer, delete_customer, search_customer
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,4 +25,6 @@ urlpatterns = [
     path("api/v1/customer/get/<int:customer_id>", get_customer_by_id),
     path("api/v1/customer/update/", update_customer),
     path("api/v1/customer/delete/<int:customer_id>", delete_customer),
+    path("api/v1/customer/search/", search_customer),
+
 ]

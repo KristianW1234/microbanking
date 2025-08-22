@@ -44,6 +44,17 @@ class Customer_Service_Impl(Customer_Service):
         return customer
 
     def search_customer(self,data):
-        pass
+        queryset = Customer.objects.all()
+
+        if "name" in data:
+            queryset = queryset.filter(name__icontains=data["name"])
+        if "email" in data:
+            queryset = queryset.filter(email__icontains=data["email"])
+        if "phone_number" in data:
+            queryset = queryset.filter(phone_number__icontains=data["phone_number"])
+
+
+
+        return queryset
 
 

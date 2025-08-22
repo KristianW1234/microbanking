@@ -71,3 +71,22 @@ def delete_customer(_, customer_id):
         "message": "Customer deleted",
         "data": Customer_Serializer(customer).data
     }, status=200)
+
+@api_view(["GET"])
+def search_customer(request):
+    query_params = request.GET
+    service = Customer_Service_Impl()
+    customers = service.search_customer(query_params)
+    customers_found = len(customers)
+    res_status = 200
+    res_message = str(customers_found) + " Customers found."
+    if customers_found == 1:
+        res_message = "1 Customer found"
+    elif customers_found == 0:
+        res_status = 404
+        res_message = "Customer not found"
+    return Response({
+        "status": res_status,
+        "message": res_message,
+        "data": Customer_Serializer(customers, many=True).data
+    })
